@@ -5,8 +5,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 Create a .env.local file that consists of following keys:
 
 ```bash
-    API_KEY=ENTER_YOUR_RAWG_API_KEY
-    API_URL=https://api.rawg.io/api
+    API_URL=https://api.tvmaze.com
 ```
 
 Then run the development server:
