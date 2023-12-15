@@ -26,6 +26,7 @@ const ContainerMain = styled.main`
 `;
 
 export default function HomePage({ showsData }) {
+
   return (
     <>
       <ContainerHeader>
@@ -44,8 +45,25 @@ export default function HomePage({ showsData }) {
 }
 
 export async function getServerSideProps() {
-  const showsRequest = await fetch(`${process.env.API_URL}/schedule`);
-  const showsData = await showsRequest.json();
+  const locationRequest = await fetch(`http://ip-api.com/json/`);
+  const userLocation = await locationRequest.json();
 
-  return { props: { showsData } };
+async function getAPIData(userLocation) {
+  const showsRequest = await fetch(
+    `${process.env.API_URL}/schedule?country=${userLocation.countryCode}`
+  );
+  const showsDataByCountry = await showsRequest.json();
+
+  if (showsDataByCountry.length === 0) {
+    const showsRequest2 = await fetch(`${process.env.API_URL}/schedule`);
+    const showsDataByDefault = await showsRequest2.json();
+    return showsDataByDefault;
+  } else {
+    return showsDataByCountry;
+  }
+}
+
+const showsData = await getAPIData(userLocation);
+
+return { props: { showsData } };
 }

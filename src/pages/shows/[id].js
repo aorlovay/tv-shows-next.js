@@ -142,7 +142,6 @@ const InfoCastContainer = styled.div`
 `;
 
 export default function TVShowPage({ item, cast }) {
-  console.log("cast", cast);
   return (
     <>
       {item && (
@@ -156,7 +155,7 @@ export default function TVShowPage({ item, cast }) {
                     item.image.medium ||
                     "https://dummyimage.com/600x400/fff/000"
                   }
-                  objectFit="cover"
+                  // objectFit="cover"
                   alt={`Image of ${item.name} TV Show`}
                   sizes="100%"
                   priority
