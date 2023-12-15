@@ -3,7 +3,10 @@ import React from "react";
 
 import { Title } from "@/components/styled/Title";
 import { Rating } from "@/components/styled/Rating";
-import { StyledImageShow } from "@/components/styled/StyledImageShow";
+import {
+  StyledImageShow,
+  StyledImageShowContainer,
+} from "@/components/styled/StyledImageShow";
 import { NameShow } from "@/components/styled/NameShow";
 import { InfoSubTitle } from "@/components/styled/InfoSubTitle";
 import { Info } from "@/components/styled/Info";
@@ -47,9 +50,17 @@ const HeaderContainerInfo = styled.div`
   align-items: flex-start;
 
   @media all and (min-width: 768px) {
-    width: 44%;
+    justify-content: flex-start;
     margin-left: 50px;
-    justify-content: flex-end;
+    padding-top: 30px;
+    width: 44%;
+  }
+
+  @media all and (min-width: 1320px) {
+    justify-content: flex-start;
+    margin-left: 50px;
+    margin-right: 235px;
+    padding-top: 30px;
   }
 `;
 
@@ -79,13 +90,17 @@ const InfoContainerMainDivide = styled.div`
 const InfoContainerSmall = styled.div`
   display: grid;
   grid-template-columns: ${(props) => (props.cast ? "76px 1fr" : "1fr")};
+  align-items: ${(props) => (props.cast ? "center" : '' )};
 
   @media all and (min-width: 768px) {
-    grid-template-columns: ${(props) =>
-      props.cast ? "108px 1fr" : "215px 1fr"};
+    grid-template-columns: ${(props) => (props.cast ? "1fr 3fr" : "1fr 1fr")};
     border-bottom: 1px solid #000;
     align-items: center;
     padding: ${(props) => (props.cast ? "14px 0" : "30px 0")};
+  }
+
+  @media all and (min-width: 1041px) {
+    grid-template-columns: ${(props) => (props.cast ? "1fr 3fr" : "1fr 2fr")};
   }
 `;
 
@@ -119,9 +134,10 @@ const StarringContainer = styled.div`
 const InfoCastContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr;
+  align-items: center;
 
   @media all and (min-width: 768px) {
-    grid-template-columns: 1fr 165px;
+    grid-template-columns: 2fr 1fr;
   }
 `;
 
@@ -132,17 +148,20 @@ export default function TVShowPage({ item, cast }) {
       {item && (
         <ShowContainer>
           <HeaderContainer>
-            <Title show>TV Bland</Title>
+            <Title>TV Bland</Title>
             <HeaderContainerInfoImage>
-              <StyledImageShow
-                src={
-                  item.image.medium || "https://dummyimage.com/600x400/fff/000"
-                }
-                objectFit="cover"
-                alt={`Image of ${item.name} TV Show`}
-                sizes="100%"
-                priority
-              />
+              <StyledImageShowContainer>
+                <StyledImageShow
+                  src={
+                    item.image.medium ||
+                    "https://dummyimage.com/600x400/fff/000"
+                  }
+                  objectFit="cover"
+                  alt={`Image of ${item.name} TV Show`}
+                  sizes="100%"
+                  priority
+                />
+              </StyledImageShowContainer>
               <HeaderContainerInfo>
                 <StarContainer showRating showRatingMobile>
                   {Array.from(
@@ -164,6 +183,7 @@ export default function TVShowPage({ item, cast }) {
                 </StarContainer>
                 <NameShow>{item.name}</NameShow>
                 <InfoSubTitle
+                  header
                   dangerouslySetInnerHTML={{ __html: item.summary }}
                 ></InfoSubTitle>
               </HeaderContainerInfo>

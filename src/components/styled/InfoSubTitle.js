@@ -13,5 +13,6 @@ export const InfoSubTitle = styled.p`
     font-size: 20px;
     line-height: 1,5em;
     margin-bottom: 0;
+    padding-right: ${(props) => (props.header ? "0" : "15px")};
   }
 `;

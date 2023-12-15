@@ -11,4 +11,8 @@ export const StyledImageContainer = styled.div`
   position: relative;
   aspect-ratio: 140 / 207;
   width: 100%;
+
+  @media all and (min-width: 768px) {
+    aspect-ratio: 165 / 240;
+  }
 `

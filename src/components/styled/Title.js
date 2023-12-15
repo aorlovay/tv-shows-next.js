@@ -11,6 +11,6 @@ export const Title = styled.h1`
   @media all and (min-width: 768px) {
     font-size: 30px;
     line-height: 1em;
-    margin-bottom: ${(props) => (props.show ? 0 : "67px")};
+    margin-bottom: 67px;
   }
 `;
