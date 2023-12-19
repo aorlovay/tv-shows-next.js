@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 import { AvatarContainer } from "./styled/AvatarContainer";
 
@@ -7,7 +7,7 @@ export default function Avatar({ image, name }) {
     <AvatarContainer>
       <Image
         src={image || "/no-avatar.svg"}
-        fill
+        fill="true"
         layout="fill"
         objectFit="cover"
         alt={(name && `Image of ${name}`) || `Image of no avatar for ${name}`}

@@ -73,7 +73,7 @@ export default function TVShowPage({ item, cast }) {
                 </StarContainer>
                 <NameShow>{item.name}</NameShow>
                 <InfoSubTitle
-                  header
+                  header='true'
                   dangerouslySetInnerHTML={{ __html: item.summary }}
                 ></InfoSubTitle>
               </HeaderContainerInfo>
@@ -120,13 +120,13 @@ export default function TVShowPage({ item, cast }) {
                 {cast.length !== 0 ? (
                   cast.map((cast, index) => (
                     <div key={index}>
-                      <InfoContainerSmall cast>
+                      <InfoContainerSmall cast='true'>
                         <Avatar
                           name={cast.person.name}
                           image={cast.person?.image?.medium}
                         />
                         <InfoCastContainer>
-                          <InfoSubTitle cast>{cast.person.name}</InfoSubTitle>
+                          <InfoSubTitle cast='true'>{cast.person.name}</InfoSubTitle>
                           <Info>{cast.character.name}</Info>
                         </InfoCastContainer>
                       </InfoContainerSmall>
