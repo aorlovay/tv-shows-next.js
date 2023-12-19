@@ -6,7 +6,7 @@ export const TitleMain = styled.h3`
   font-weight: 400;
   line-height: 1em;
   letter-spacing: 0.017em;
-  margin: ${(props) => (props.homeMobile ? "42px 0 21px" : "0 0 12px")};
+  margin: ${(props) => (props.homemobile ? "42px 0 21px" : "0 0 12px")};
 
   @media all and (min-width: 768px) {
     font-size: 30px;

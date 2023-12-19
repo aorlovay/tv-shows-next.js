@@ -48,14 +48,12 @@ export default function TVShowPage({ item, cast }) {
                     item.image.medium ||
                     "https://dummyimage.com/600x400/fff/000"
                   }
-                  // objectFit="cover"
                   alt={`Image of ${item.name} TV Show`}
                   sizes="100%"
-                  priority
                 />
               </StyledImageShowContainer>
               <HeaderContainerInfo>
-                <StarContainer showRating showRatingMobile>
+                <StarContainer showrating='true' showratingmobile='true'>
                   {Array.from(
                     { length: TOTAL_NUMBER_OF_STARS },
                     (_, index) => index + 1

@@ -10,21 +10,20 @@ import { StyledImage, StyledImageContainer } from "./styled/StyledImage";
 
 export default function TVShowItem({ item }) {
   return (
-    <Link href={`/shows/${item?.show?.id || item?.id}`}>
+    <Link href={`/shows/${item.show.id || item.id}`}>
       <Article>
         <StyledImageContainer>
           <StyledImage
             src={
-              item?.show?.image?.medium ||
-              item?.image?.medium ||
+              item.show.image.medium ||
+              item.image.medium ||
               "https://dummyimage.com/600x400/fff/000"
             }
             alt={`Image of ${item.id}`}
             sizes="100%"
-            priority
           />
         </StyledImageContainer>
-        <StarContainer showRating>
+        <StarContainer showrating='true'>
           {Array.from(
             { length: TOTAL_NUMBER_OF_STARS },
             (_, index) => index + 1
@@ -32,15 +31,15 @@ export default function TVShowItem({ item }) {
             <Star
               key={index}
               active={
-                !item.show?.rating?.average || !item.rating?.average
+                !item.show.rating.average || !item.rating.average
                   ? false
-                  : (item.show?.rating?.average || item.rating?.average) / 2 >
+                  : (item.show.rating.average || item.rating.average) / 2 >
                     index
               }
             />
           ))}
         </StarContainer>
-        <Name>{item.show?.name || item.name}</Name>
+        <Name>{item.show.name || item.name}</Name>
       </Article>
     </Link>
   );

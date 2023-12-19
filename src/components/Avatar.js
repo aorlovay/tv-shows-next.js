@@ -12,7 +12,6 @@ export default function Avatar({ image, name }) {
         objectFit="cover"
         alt={(name && `Image of ${name}`) || `Image of no avatar for ${name}`}
         sizes="100%"
-        priority
       />
     </AvatarContainer>
   );

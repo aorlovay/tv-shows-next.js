@@ -23,7 +23,7 @@ export default function HomePage({ showsData, error }) {
           <TitleMain>Sorry, please try again later</TitleMain>
         ) : (
           <>
-            <TitleMain homeMobile>Last Added Shows</TitleMain>
+            <TitleMain homemobile='true'>Last Added Shows</TitleMain>
             <TVShowList items={showsData} />
           </>
         )}
