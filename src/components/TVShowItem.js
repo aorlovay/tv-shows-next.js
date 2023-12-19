@@ -1,11 +1,12 @@
 import Link from "next/link";
-
 import { TOTAL_NUMBER_OF_STARS } from "@/utils/consts";
+
+import Star from "./Star";
 
 import { Article } from "./styled/Article";
 import { Name } from "./styled/Name";
+import { StarContainer } from "./styled/StarContainer";
 import { StyledImage, StyledImageContainer } from "./styled/StyledImage";
-import Star, { StarContainer } from "./Star";
 
 export default function TVShowItem({ item }) {
   return (

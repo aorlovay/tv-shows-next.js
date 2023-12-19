@@ -1,145 +1,35 @@
-import styled from "styled-components";
 import React from "react";
 
-import { Title } from "@/components/styled/Title";
+import Link from "next/link";
+import { TOTAL_NUMBER_OF_STARS } from "@/utils/consts";
+
+import Avatar from "@/components/Avatar";
+import Star from "@/components/Star";
+
+import { Info } from "@/components/styled/Info";
+import { InfoSubTitle } from "@/components/styled/InfoSubTitle";
+import { NameShow } from "@/components/styled/NameShow";
 import { Rating } from "@/components/styled/Rating";
+import {
+  HeaderContainer,
+  HeaderContainerInfo,
+  HeaderContainerInfoImage,
+  InfoCastContainer,
+  InfoContainerMain,
+  InfoContainerMainDivide,
+  InfoContainerSmall,
+  ShowContainer,
+  ShowInfoContainer,
+  StarringContainer,
+} from "@/components/styled/ShowContainers";
+import { StarContainer } from "@/components/styled/StarContainer";
 import {
   StyledImageShow,
   StyledImageShowContainer,
 } from "@/components/styled/StyledImageShow";
-import { NameShow } from "@/components/styled/NameShow";
-import { InfoSubTitle } from "@/components/styled/InfoSubTitle";
-import { Info } from "@/components/styled/Info";
-import Star, { StarContainer } from "@/components/Star";
-import { TOTAL_NUMBER_OF_STARS } from "@/utils/consts";
+import { Title } from "@/components/styled/Title";
 import { TitleMain } from "@/components/styled/TitleMain";
-import Avatar from "@/components/Avatar";
-
-const ShowContainer = styled.main`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
-const HeaderContainer = styled.header`
-  background-color: #ebebeb;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 30px 15px 67px;
-
-  @media all and (min-width: 768px) {
-    flex: 1;
-    margin-top: 0px;
-    padding: 100px 100px 87px;
-  }
-`;
-
-const HeaderContainerInfoImage = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  @media all and (min-width: 768px) {
-    flex-direction: row;
-  }
-`;
-
-const HeaderContainerInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  @media all and (min-width: 768px) {
-    justify-content: flex-start;
-    margin-left: 50px;
-    padding-top: 30px;
-    width: 44%;
-  }
-
-  @media all and (min-width: 1320px) {
-    justify-content: flex-start;
-    margin-left: 50px;
-    margin-right: 235px;
-    padding-top: 30px;
-  }
-`;
-
-const InfoContainerMain = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 30px;
-  padding: 43px 15px;
-
-  @media all and (min-width: 768px) {
-    flex: 1;
-    gap: 50px;
-    flex-direction: row;
-    padding: 106px 100px;
-  }
-`;
-
-const InfoContainerMainDivide = styled.div`
-  @media all and (min-width: 768px) {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
-`;
-
-const InfoContainerSmall = styled.div`
-  display: grid;
-  grid-template-columns: ${(props) => (props.cast ? "76px 1fr" : "1fr")};
-  align-items: ${(props) => (props.cast ? "center" : '' )};
-
-  @media all and (min-width: 768px) {
-    grid-template-columns: ${(props) => (props.cast ? "1fr 3fr" : "1fr 1fr")};
-    border-bottom: 1px solid #000;
-    align-items: center;
-    padding: ${(props) => (props.cast ? "14px 0" : "30px 0")};
-  }
-
-  @media all and (min-width: 1041px) {
-    grid-template-columns: ${(props) => (props.cast ? "1fr 3fr" : "1fr 2fr")};
-  }
-`;
-
-const ShowInfoContainer = styled.div`
-  display: grid;
-  gap: 38px;
-  grid-template-columns: 1fr 1fr;
-  padding-top: 12px;
-
-  @media all and (min-width: 768px) {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    padding-top: 0;
-  }
-`;
-
-const StarringContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: 10px;
-
-  @media all and (min-width: 768px) {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-`;
-
-const InfoCastContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  align-items: center;
-
-  @media all and (min-width: 768px) {
-    grid-template-columns: 2fr 1fr;
-  }
-`;
+import { LinkBack } from "@/components/styled/LinkBack";
 
 export default function TVShowPage({ item, cast }) {
   return (
@@ -147,7 +37,10 @@ export default function TVShowPage({ item, cast }) {
       {item && (
         <ShowContainer>
           <HeaderContainer>
-            <Title>TV Bland</Title>
+            <Link href={`/`}>
+              <LinkBack>Home</LinkBack>
+              <Title>TV Bland</Title>
+            </Link>
             <HeaderContainerInfoImage>
               <StyledImageShowContainer>
                 <StyledImageShow
@@ -256,39 +149,70 @@ export default function TVShowPage({ item, cast }) {
 }
 
 export const getStaticPaths = async () => {
-  const showsRequest = await fetch(`${process.env.API_URL}/schedule`);
-  const showsData = await showsRequest.json();
+  try {
+    const locationRequest = await fetch(`http://ip-api.com/json/`);
+    const userLocation = await locationRequest.json();
 
-  return {
-    paths: showsData.map((show) => {
-      return {
-        params: {
-          id: show.id.toString(),
-        },
-      };
-    }),
-    fallback: true,
-  };
+    async function getAPIData(userLocation) {
+      const showsRequest = await fetch(
+        `${process.env.API_URL}/schedule?country=${userLocation.countryCode}`
+      );
+      const showsDataByCountry = await showsRequest.json();
+
+      if (showsDataByCountry.length === 0) {
+        const showsRequest2 = await fetch(`${process.env.API_URL}/schedule`);
+        const showsDataByDefault = await showsRequest2.json();
+        return showsDataByDefault;
+      } else {
+        return showsDataByCountry;
+      }
+    }
+    const showsData = await getAPIData(userLocation);
+
+    return {
+      paths: showsData.map((show) => {
+        return {
+          params: {
+            id: show.id.toString(),
+          },
+        };
+      }),
+      fallback: true,
+    };
+  } catch (error) {
+    return {
+      paths: [],
+      fallback: true,
+    };
+  }
 };
 
 export const getStaticProps = async (context) => {
-  const { params } = context;
-  console.log("params", params);
+  try {
+    const { params } = context;
+    console.log("params", params);
 
-  const showsResponse = await fetch(
-    `${process.env.API_URL}/shows/${params.id}`
-  );
-  const item = await showsResponse.json();
+    const showsResponse = await fetch(
+      `${process.env.API_URL}/shows/${params.id}`
+    );
+    const item = await showsResponse.json();
 
-  const castResponse = await fetch(
-    `${process.env.API_URL}/shows/${params.id}/cast`
-  );
-  const cast = await castResponse.json();
+    const castResponse = await fetch(
+      `${process.env.API_URL}/shows/${params.id}/cast`
+    );
+    const cast = await castResponse.json();
 
-  const imageResponse = await fetch(
-    `${process.env.API_URL}/shows/${params.id}/images`
-  );
-  const images = await imageResponse.json();
+    const imageResponse = await fetch(
+      `${process.env.API_URL}/shows/${params.id}/images`
+    );
+    const images = await imageResponse.json();
 
-  return { props: { item, cast, images } };
+    return { props: { item, cast, images } };
+  } catch (error) {
+    return {
+      props: {
+        error: "Error fetching show data",
+      },
+    };
+  }
 };
